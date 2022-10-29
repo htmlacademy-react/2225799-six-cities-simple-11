@@ -22,7 +22,7 @@ function App({placesFound}:AppScreenProps): JSX.Element {
           element={<Login />}
         />
         <Route
-          path={AppRoute.Offer}
+          path={`${AppRoute.Offer}/:id`}
           element={<Room />}
         />
         <Route
