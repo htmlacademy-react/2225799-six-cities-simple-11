@@ -4,18 +4,20 @@ import MainPage from '../../pages/main-page/main-page';
 import Login from '../../pages/login/login';
 import Room from '../../pages/offer/offer';
 import Page404 from '../../pages/404-page/404-page';
+import {Offers} from '../../types/offer';
 
 type AppScreenProps = {
   placesFound: number;
+  offers: Offers;
 }
 
-function App({placesFound}:AppScreenProps): JSX.Element {
+function App({placesFound, offers}:AppScreenProps): JSX.Element {
   return(
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainPage placesFound={placesFound} />}
+          element={<MainPage placesFound={placesFound} offers={offers} />}
         />
         <Route
           path={AppRoute.Login}
