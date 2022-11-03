@@ -10,14 +10,15 @@ type CardsListProps = {
 function CardsList({offers}: CardsListProps): JSX.Element {
 
   const [activeCard, setActiveCard] = useState<string | number>();
-  const handleMouseEnter = (offer: Offer) => {
+  const onMouseCardEnter = (offer: Offer) => {
     setActiveCard(offer.id);
   };
 
-  const handleMouseLeave = () => {
+  const onMouseCardLeave = () => {
     setActiveCard('');
   };
 
+  //Временная переменная
   const temp = activeCard ? activeCard?.toString() : '';
 
   return(
@@ -26,7 +27,7 @@ function CardsList({offers}: CardsListProps): JSX.Element {
         const keyValue = offer.id;
 
         return(
-          <Card offer={offer} key ={keyValue} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave}/>
+          <Card offer={offer} key ={keyValue} handleMouseEnter={onMouseCardEnter} handleMouseLeave={onMouseCardLeave}/>
         );
       })}
     </div>

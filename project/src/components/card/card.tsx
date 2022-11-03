@@ -1,5 +1,7 @@
 import {MouseEvent} from 'react';
+import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
+import {AppRoute} from '../../const';
 
 type CardProps = {
   offer: Offer;
@@ -9,9 +11,7 @@ type CardProps = {
 
 function Card({offer, handleMouseEnter, handleMouseLeave}: CardProps): JSX.Element {
   const starsWidth = ((Math.floor(offer.rating ) / 5) * 100).toString().concat('%');
-  // const handleMouseover = (e) => {
-  //   activeCard = offer.id;
-  // };
+  const pathToOffer = AppRoute.Offer.concat('/:').concat(offer.id.toString());
 
   return(
     <article
@@ -27,9 +27,9 @@ function Card({offer, handleMouseEnter, handleMouseLeave}: CardProps): JSX.Eleme
         :
         ''}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="/">
+        <Link to={`${pathToOffer}`}>
           <img className="place-card__image" src={offer.thumbImage} width="260" height="200" alt="Place"/>
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -46,7 +46,7 @@ function Card({offer, handleMouseEnter, handleMouseLeave}: CardProps): JSX.Eleme
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{offer.name}</a>
+          <Link to={`${pathToOffer}`}>{offer.name}</Link>
         </h2>
         <p className="place-card__type">{offer.features.entire}</p>
       </div>
