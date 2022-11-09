@@ -1,7 +1,5 @@
 export type Features = {
   entire: string;
-  bedrooms: number;
-  maxAdults: number;
 };
 
 export type Price = {
@@ -10,41 +8,49 @@ export type Price = {
   text: string;
 };
 
-export type User = {
-  avatar: string;
+export type Host = {
+  avatarUrl: string;
+  id: number;
+  isPro: boolean;
   name: string;
-  pro?: boolean;
-};
+}
 
-export type Review = {
-  id: string | number;
-  user: User;
-  rating: number;
-  text: string;
-  date: string;
-};
+
+// export type Location = {
+//   title: string;
+//   longitude: number;
+//   latitude: number;
+//   zoom?: number;
+// };
 
 export type Location = {
-  title: string;
-  longitude: number;
   latitude: number;
-  zoom?: number;
-};
+  longitude: number;
+  zoom: number;
+}
+
+export type City = {
+  location: Location;
+  name: string;
+}
 
 export type Offer = {
-  id: string | number;
-  location: Location;
-  thumbImage: string;
+  bedrooms: number;
+  city: City;
+  description: string;
+  goods: string[];
+  host: Host;
+  id: number;
   images: string[];
   isPremium: boolean;
-  name: string;
+  location: Location;
+  maxAdults: number;
+  previewImage: string;
+  price: number;
+  title: string;
   rating: number;
-  features: Features;
-  price: Price;
-  inside: string[];
-  host: User;
-  description: string[];
-  reviews?: Review[];
+  type: string;
+
 };
 
 export type Offers = Offer[];

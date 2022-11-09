@@ -4,12 +4,12 @@ import MainPage from '../../pages/main-page/main-page';
 import Login from '../../pages/login/login';
 import Room from '../../pages/offer/offer';
 import Page404 from '../../pages/404-page/404-page';
-import {Offers, Location} from '../../types/offer';
+import {Offers, City} from '../../types/offer';
 
 type AppScreenProps = {
   placesFound: number;
   offers: Offers;
-  city: Location;
+  city: City;
 }
 
 function App({placesFound, offers, city}:AppScreenProps): JSX.Element {

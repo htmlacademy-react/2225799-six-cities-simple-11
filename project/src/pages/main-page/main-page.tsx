@@ -1,13 +1,13 @@
 import CardsList from '../../components/cards-list/cards-list';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
-import {Location, Offers, Offer} from '../../types/offer';
+import {Location, Offers, Offer, City} from '../../types/offer';
 import {useState} from 'react';
 
 type MainPageProps = {
   placesFound: number;
   offers: Offers;
-  city: Location;
+  city: City;
 }
 
 function MainPage({placesFound, offers, city}: MainPageProps): JSX.Element {

@@ -1,8 +1,10 @@
-import {Location} from '../types/offer';
+import {City} from '../types/offer';
 
-export const CITY: Location = {
-  title: 'Amsterdam',
-  longitude: 4.85309666406198,
-  latitude: 52.3909553943508,
-  zoom: 10
+export const CITY: City = {
+  location: {
+    longitude: 4.895168,
+    latitude: 52.370216,
+    zoom: 10
+  },
+  name: 'Amsterdam',
 };
