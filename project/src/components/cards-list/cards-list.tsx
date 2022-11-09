@@ -1,28 +1,17 @@
-import {useState} from 'react';
 import Card from '../../components/card/card';
 import {Offers, Offer} from '../../types/offer';
 
 
 type CardsListProps = {
   offers: Offers;
+  onMouseCardEnter: (offer: Offer) => void;
+  onMouseCardLeave: () => void;
 }
 
-function CardsList({offers}: CardsListProps): JSX.Element {
-
-  const [activeCard, setActiveCard] = useState<string | number>();
-  const onMouseCardEnter = (offer: Offer) => {
-    setActiveCard(offer.id);
-  };
-
-  const onMouseCardLeave = () => {
-    setActiveCard('');
-  };
-
-  //Временная переменная
-  const temp = activeCard ? activeCard?.toString() : '';
+function CardsList({offers, onMouseCardEnter, onMouseCardLeave}: CardsListProps): JSX.Element {
 
   return(
-    <div className={`cities__places-list places__list tabs__content ${temp}`}>
+    <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => {
         const keyValue = offer.id;
 

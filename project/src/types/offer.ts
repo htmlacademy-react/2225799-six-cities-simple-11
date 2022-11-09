@@ -13,7 +13,7 @@ export type Price = {
 export type User = {
   avatar: string;
   name: string;
-  status?: string;
+  pro?: boolean;
 };
 
 export type Review = {
@@ -25,9 +25,10 @@ export type Review = {
 };
 
 export type Location = {
-  city: string;
+  title: string;
   longitude: number;
   latitude: number;
+  zoom?: number;
 };
 
 export type Offer = {

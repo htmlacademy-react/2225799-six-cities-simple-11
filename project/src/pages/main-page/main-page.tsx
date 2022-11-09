@@ -1,13 +1,26 @@
 import CardsList from '../../components/cards-list/cards-list';
 import Header from '../../components/header/header';
-import {Offers} from '../../types/offer';
+import Map from '../../components/map/map';
+import {Location, Offers, Offer} from '../../types/offer';
+import {useState} from 'react';
 
 type MainPageProps = {
   placesFound: number;
   offers: Offers;
+  city: Location;
 }
 
-function MainPage({placesFound, offers}: MainPageProps): JSX.Element {
+function MainPage({placesFound, offers, city}: MainPageProps): JSX.Element {
+
+  const [activeCard, setActiveCard] = useState<Location | undefined>();
+  const onMouseCardHover = (offer: Offer) => {
+    setActiveCard((state) => offer.location);
+  };
+
+  const onMouseCardUnhover = () => {
+    setActiveCard((state) => undefined);
+  };
+
   return (
     <>
       <Header/>
@@ -69,10 +82,10 @@ function MainPage({placesFound, offers}: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CardsList offers={offers}/>
+              <CardsList offers={offers} onMouseCardEnter={onMouseCardHover} onMouseCardLeave={onMouseCardUnhover}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map city={city} points={offers} selectedPoint={activeCard} />
             </div>
           </div>
         </div>
