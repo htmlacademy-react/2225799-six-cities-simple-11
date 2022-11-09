@@ -10,7 +10,7 @@ type CardProps = {
 }
 
 function Card({offer, handleMouseEnter, handleMouseLeave}: CardProps): JSX.Element {
-  const starsWidth = ((Math.floor(offer.rating ) / 5) * 100).toString().concat('%');
+  const starsWidth = ((Math.round(offer.rating ) / 5) * 100).toString().concat('%');
   const pathToOffer = AppRoute.Offer.concat('/:').concat(offer.id.toString());
 
   return(

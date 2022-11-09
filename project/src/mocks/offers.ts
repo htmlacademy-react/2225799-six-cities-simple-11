@@ -1,13 +1,13 @@
 import {Offers} from '../types/offer';
-import {AVATAR_URL, Currency} from '../const';
+import {AVATAR_URL, CURRENCY, OfferType} from '../const';
 
-export const offers: Offers = [
+export const OFFERS: Offers = [
   {
     id: 'offer1',
     location: {
-      city: 'Amsterdam',
-      longitude: 52.382452,
-      latitude: 4.839064,
+      title: 'Amsterdam',
+      longitude: 4.85309666406198,
+      latitude: 52.3909553943508,
     },
     thumbImage: 'img/apartment-01.jpg',
     images: [
@@ -22,13 +22,13 @@ export const offers: Offers = [
     rating: 4.8,
     features:
       {
-        entire: 'Apartment',
+        entire: OfferType.APARTMENT,
         bedrooms: 3,
         maxAdults: 4,
       },
     price: {
       value: 120,
-      currency: Currency.EUR,
+      currency: CURRENCY,
       text: 'night'
     },
     inside: [
@@ -37,11 +37,11 @@ export const offers: Offers = [
     host: {
       avatar: `${AVATAR_URL}?rnd=${Math.random()}`,
       name: 'Angelina',
-      status: 'Pro',
+      pro: true,
     },
     description: [
       'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-      'An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.'
+      'An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the title comes to rest in this alley flowery and colorful.'
     ],
     reviews: [
       {
@@ -59,9 +59,9 @@ export const offers: Offers = [
   {
     id: 'offer2',
     location: {
-      city: 'Cologne',
-      longitude: 50.948294,
-      latitude: 6.943851,
+      title: 'Amsterdam',
+      longitude: 4.85309666406198,
+      latitude: 52.3609553943508,
     },
     thumbImage: 'img/apartment-02.jpg',
     images: [
@@ -76,13 +76,13 @@ export const offers: Offers = [
     rating: 5,
     features:
       {
-        entire: 'Apartment',
+        entire: OfferType.HOUSE,
         bedrooms: 4,
         maxAdults: 4,
       },
     price: {
       value: 220,
-      currency: Currency.GBP,
+      currency: CURRENCY,
       text: 'night'
     },
     inside: [
@@ -112,9 +112,9 @@ export const offers: Offers = [
   {
     id: 'offer3',
     location: {
-      city: 'Brussels',
-      longitude: 50.850528,
-      latitude: 4.351544,
+      title: 'Amsterdam',
+      longitude: 4.929309666406198,
+      latitude: 52.3909553943508,
     },
     thumbImage: 'img/apartment-03.jpg',
     images: [
@@ -126,16 +126,16 @@ export const offers: Offers = [
     ],
     isPremium: true,
     name: 'Luxurious studio at great location',
-    rating: 5,
+    rating: 4.1,
     features:
       {
-        entire: 'Private place',
+        entire: OfferType.HOTEL,
         bedrooms: 2,
         maxAdults: 2,
       },
     price: {
       value: 100,
-      currency: Currency.EUR,
+      currency: CURRENCY,
       text: 'night'
     },
     inside: [
@@ -152,9 +152,9 @@ export const offers: Offers = [
   {
     id: 'offer4',
     location: {
-      city: 'Hamburg',
-      longitude: 53.552700,
-      latitude: 10.001267,
+      title: 'Amsterdam',
+      longitude: 4.939309666406198,
+      latitude: 52.3809553943508,
     },
     thumbImage: 'img/apartment-01.jpg',
     images: [
@@ -169,13 +169,13 @@ export const offers: Offers = [
     rating: 3.6,
     features:
       {
-        entire: 'Private place',
+        entire: OfferType.ROOM,
         bedrooms: 1,
         maxAdults: 2,
       },
     price: {
       value: 130,
-      currency: Currency.GBP,
+      currency: CURRENCY,
       text: 'night'
     },
     inside: [

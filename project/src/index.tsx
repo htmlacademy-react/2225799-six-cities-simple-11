@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import {offers} from './mocks/offers';
+import {OFFERS} from './mocks/offers';
+import {CITY} from './mocks/city';
 
-const Setting = {
+const Settings = {
   PlacesFound: 50,
 } as const;
 
@@ -14,8 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <App
-      placesFound = {Setting.PlacesFound}
-      offers={offers}
+      placesFound = {Settings.PlacesFound}
+      offers={OFFERS}
+      city={CITY}
     />
   </React.StrictMode>,
 );
