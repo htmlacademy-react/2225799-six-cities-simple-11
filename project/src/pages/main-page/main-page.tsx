@@ -1,8 +1,10 @@
+import {useState} from 'react';
 import CardsList from '../../components/cards-list/cards-list';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import {Location, Offers, Offer, City} from '../../types/offer';
-import {useState} from 'react';
+import {CITY_LIST_CLASS_NAME} from '../../const';
+
 
 type MainPageProps = {
   placesFound: number;
@@ -66,7 +68,7 @@ function MainPage({placesFound, offers, city}: MainPageProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesFound} places to stay in Amsterdam</b>
+              <b className="places__found">{placesFound} {placesFound > 1 ? 'places' : 'place'} to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -82,7 +84,9 @@ function MainPage({placesFound, offers, city}: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CardsList offers={offers} onMouseCardEnter={onMouseCardHover} onMouseCardLeave={onMouseCardUnhover}/>
+              <div className="cities__places-list places__list tabs__content">
+                <CardsList offers={offers} onMouseCardEnter={onMouseCardHover} onMouseCardLeave={onMouseCardUnhover} classPrefix={CITY_LIST_CLASS_NAME}/>
+              </div>
             </section>
             <div className="cities__right-section">
               <Map city={city} points={offers} selectedPoint={activeCard} />

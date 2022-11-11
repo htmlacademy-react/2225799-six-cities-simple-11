@@ -1,48 +1,7 @@
 import {Offers} from '../types/offer';
 import {AVATAR_URL, OfferType} from '../const';
 
-export const OFFERS: Offers = [
-  {
-    bedrooms: 3,
-    city: {
-      location: {
-        longitude: 4.85309666406198,
-        latitude: 52.3909553943508,
-        zoom: 8,
-      },
-      name: 'Amsterdam',
-    },
-    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-    goods: [
-      'Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'
-    ],
-    host: {
-      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
-      name: 'Angelina',
-      isPro: true,
-      id: 22,
-    },
-    id: 1,
-    images: [
-      'img/apartment-01.jpg',
-      'img/apartment-02.jpg',
-      'img/apartment-03.jpg',
-      'img/apartment-01.jpg',
-      'img/apartment-01.jpg',
-    ],
-    isPremium: true,
-    location: {
-      longitude: 4.85309666406198,
-      latitude: 52.3909553943508,
-      zoom: 8,
-    },
-    maxAdults: 4,
-    previewImage: 'img/apartment-01.jpg',
-    title: 'Beautiful &amp; luxurious studio at great location',
-    rating: 4.8,
-    type: OfferType.APARTMENT,
-    price: 120,
-  },
+export const OFFERS_NEARBY: Offers = [
   {
     bedrooms: 4,
     city: {
@@ -112,7 +71,7 @@ export const OFFERS: Offers = [
       'img/apartment-01.jpg',
       'img/apartment-01.jpg',
     ],
-    isPremium: false,
+    isPremium: true,
     location: {
       longitude: 4.929309666406198,
       latitude: 52.3909553943508,

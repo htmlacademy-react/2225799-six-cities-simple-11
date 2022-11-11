@@ -15,14 +15,6 @@ export type Host = {
   name: string;
 }
 
-
-// export type Location = {
-//   title: string;
-//   longitude: number;
-//   latitude: number;
-//   zoom?: number;
-// };
-
 export type Location = {
   latitude: number;
   longitude: number;

@@ -1,23 +1,25 @@
 import {MouseEvent} from 'react';
 import {Link} from 'react-router-dom';
+import useRating from '../../hooks/useRating';
 import {Offer} from '../../types/offer';
 import {AppRoute, CURRENCY} from '../../const';
 
 type CardProps = {
   offer: Offer;
-  handleMouseEnter: (offer: Offer) => void;
-  handleMouseLeave: () => void;
+  handleMouseEnter?: (offer: Offer) => void;
+  handleMouseLeave?: () => void;
+  classPrefix: string;
 }
 
-function Card({offer, handleMouseEnter, handleMouseLeave}: CardProps): JSX.Element {
-  const starsWidth = ((Math.round(offer.rating ) / 5) * 100).toString().concat('%');
+function Card({offer, handleMouseEnter, handleMouseLeave, classPrefix}: CardProps): JSX.Element {
+  const starsWidth = useRating(offer.rating);
   const pathToOffer = AppRoute.Offer.concat('/:').concat(offer.id.toString());
 
   return(
     <article
-      className="cities__card place-card"
-      onMouseEnter={(event: MouseEvent<HTMLElement>) => {handleMouseEnter(offer);}}
-      onMouseLeave={handleMouseLeave}
+      className={`${classPrefix}__card place-card`}
+      onMouseEnter={(event: MouseEvent<HTMLElement>) => {handleMouseEnter && handleMouseEnter(offer);}}
+      onMouseLeave={handleMouseLeave && handleMouseLeave}
     >
       {offer.isPremium
         ?
@@ -26,7 +28,7 @@ function Card({offer, handleMouseEnter, handleMouseLeave}: CardProps): JSX.Eleme
         </div>
         :
         ''}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${classPrefix}__image - wrapper place-card__image-wrapper`}>
         <Link to={`${pathToOffer}`}>
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place"/>
         </Link>

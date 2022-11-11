@@ -16,9 +16,17 @@ export const URL_MARKER_CURRENT =
 
 export const ICON_SIZE = 40;
 
+export const HOST_AVATAR_SIZE = 74;
+
+export const MAP_HEIGHT = 579;
+
+export const CITY_LIST_CLASS_NAME = 'cities';
+
+export const NEAR_PLACES_LIST_CLASS_NAME = 'near-places';
+
 export enum OfferType {
   APARTMENT = 'Apartment',
-  ROOM = 'Room',
+  ROOM = 'Private Room',
   HOUSE = 'House',
   HOTEL = 'Hotel',
 }
