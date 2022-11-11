@@ -4,22 +4,23 @@ import {Offers, Offer} from '../../types/offer';
 
 type CardsListProps = {
   offers: Offers;
-  onMouseCardEnter: (offer: Offer) => void;
-  onMouseCardLeave: () => void;
+  onMouseCardEnter?: (offer: Offer) => void;
+  onMouseCardLeave?: () => void;
+  classPrefix: string;
 }
 
-function CardsList({offers, onMouseCardEnter, onMouseCardLeave}: CardsListProps): JSX.Element {
+function CardsList({offers, onMouseCardEnter, onMouseCardLeave, classPrefix}: CardsListProps): JSX.Element {
 
   return(
-    <div className="cities__places-list places__list tabs__content">
+    <>
       {offers.map((offer) => {
         const keyValue = offer.id;
 
         return(
-          <Card offer={offer} key ={keyValue} handleMouseEnter={onMouseCardEnter} handleMouseLeave={onMouseCardLeave}/>
+          <Card offer={offer} key ={keyValue} handleMouseEnter={onMouseCardEnter} handleMouseLeave={onMouseCardLeave} classPrefix={classPrefix}/>
         );
       })}
-    </div>
+    </>
   );
 }
 
