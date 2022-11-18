@@ -1,13 +1,3 @@
-export type Features = {
-  entire: string;
-};
-
-export type Price = {
-  value: number;
-  currency: string;
-  text: string;
-};
-
 export type Host = {
   avatarUrl: string;
   id: number;
@@ -25,6 +15,8 @@ export type City = {
   location: Location;
   name: string;
 }
+
+export type Cities = City[]
 
 export type Offer = {
   bedrooms: number;

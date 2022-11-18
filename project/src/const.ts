@@ -30,3 +30,5 @@ export enum OfferType {
   HOUSE = 'House',
   HOTEL = 'Hotel',
 }
+
+export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
