@@ -4,10 +4,10 @@ import Header from '../../components/header/header';
 import ReviewForm from '../../components/review-form/review-form';
 import CommentsList from '../../components/comments-list/comments-list';
 import Map from '../../components/map/map';
+import CardsList from '../../components/cards-list/cards-list';
 import {Reviews} from '../../types/review';
 import {Offer, Offers} from '../../types/offer';
 import {MAP_HEIGHT, NEAR_PLACES_LIST_CLASS_NAME, HOST_AVATAR_SIZE} from '../../const';
-import CardsList from '../../components/cards-list/cards-list';
 
 type OfferPageProps = {
   comments: Reviews;
@@ -27,8 +27,8 @@ function Room({comments, commentsNumber, offer, offersNearby}: OfferPageProps): 
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {offer.images.map((image) => {
-                const keyValue = offer.id.toString().concat('-').concat(image);
+              {offer.images.map((image, index) => {
+                const keyValue = index.toString() + offer.id.toString().concat('-').concat(image);
 
                 return(
                   <div className="property__image-wrapper" key={keyValue}>

@@ -1,74 +1,48 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import useAppSelector from '../../hooks/useAppSelector';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import {chooseCityAction, showOffersAction} from '../../store/action';
 import CardsList from '../../components/cards-list/cards-list';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
-import {Location, Offers, Offer, City} from '../../types/offer';
+import CitiesList from '../../components/cities-list/cities-list';
+import {Location, Offer, City} from '../../types/offer';
 import {CITY_LIST_CLASS_NAME} from '../../const';
+import {OFFERS} from '../../mocks/offers';
+import {CITIES} from '../../const';
+import {Nullable} from '../../types';
 
+function MainPage(): JSX.Element {
 
-type MainPageProps = {
-  placesFound: number;
-  offers: Offers;
-  city: City;
-}
-
-function MainPage({placesFound, offers, city}: MainPageProps): JSX.Element {
-
+  const dispatch = useAppDispatch();
   const [activeCard, setActiveCard] = useState<Location | undefined>();
   const onMouseCardHover = (offer: Offer) => {
     setActiveCard((state) => offer.location);
   };
-
   const onMouseCardUnhover = () => {
     setActiveCard((state) => undefined);
   };
+  const selectedCityName = useAppSelector((state) => state.city);
+  const handleCitySelect = (city: string) => dispatch(chooseCityAction(city));
+  const selectedCityOffers = useAppSelector((state) => state.offers);
+  const selectedCity: Nullable<City> = selectedCityOffers.length ? selectedCityOffers[0].city : null;
+  const placesFound = selectedCityOffers.length;
+  const cities = CITIES;
+
+  useEffect(() => {
+    dispatch(showOffersAction(OFFERS.filter((offer) => offer.city.name === selectedCityName)));
+  }, [selectedCityName]);
 
   return (
-    <>
+    <div className="page page--gray page--main">
       <Header/>
       <main className="page__main page__main--index">
-        <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="/">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <CitiesList cities={cities} onCityClick={handleCitySelect}/>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesFound} {placesFound > 1 ? 'places' : 'place'} to stay in Amsterdam</b>
+              <b className="places__found">{placesFound} {placesFound > 1 ? 'places' : 'place'} to stay in {selectedCityName}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -85,16 +59,16 @@ function MainPage({placesFound, offers, city}: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CardsList offers={offers} onMouseCardEnter={onMouseCardHover} onMouseCardLeave={onMouseCardUnhover} classPrefix={CITY_LIST_CLASS_NAME}/>
+                <CardsList offers={selectedCityOffers} onMouseCardEnter={onMouseCardHover} onMouseCardLeave={onMouseCardUnhover} classPrefix={CITY_LIST_CLASS_NAME}/>
               </div>
             </section>
             <div className="cities__right-section">
-              <Map city={city} points={offers} selectedPoint={activeCard} />
+              {selectedCity && <Map city={selectedCity} points={selectedCityOffers} selectedPoint={activeCard} />}
             </div>
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 
