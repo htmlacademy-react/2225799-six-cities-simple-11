@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
-import {chooseCityAction, showOffersAction} from '../../store/action';
+import {chooseCityAction, selectSortingTypeAction, showOffersAction} from '../../store/action';
 import CardsList from '../../components/cards-list/cards-list';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
@@ -11,6 +11,18 @@ import {CITY_LIST_CLASS_NAME} from '../../const';
 import {OFFERS} from '../../mocks/offers';
 import {CITIES} from '../../const';
 import {Nullable} from '../../types';
+import Sorting from '../../components/sorting/sorting';
+import {SortingTypeNames} from '../../const';
+
+type OffersSorterOutput = (a:Offer, b:Offer) => number;
+
+const offersSorter = (sortingType: string):OffersSorterOutput | undefined => {
+  switch (sortingType){
+    case SortingTypeNames.PRICE_LOW_TO_HIGH: return (a: Offer, b: Offer):number => a.price - b.price;
+    case SortingTypeNames.PRICE_HIGH_TO_LOW: return (a: Offer, b: Offer):number => b.price - a.price;
+    case SortingTypeNames.TOP_RATED_FIRST: return (a: Offer, b: Offer):number => b.rating - a.rating;
+  }
+};
 
 function MainPage(): JSX.Element {
 
@@ -28,10 +40,12 @@ function MainPage(): JSX.Element {
   const selectedCity: Nullable<City> = selectedCityOffers.length ? selectedCityOffers[0].city : null;
   const placesFound = selectedCityOffers.length;
   const cities = CITIES;
+  const selectedSortingOption = useAppSelector((state) => state.sortingType);
+  const handleSortingOptionClick = (sortingOption: string) => dispatch(selectSortingTypeAction(sortingOption));
 
   useEffect(() => {
-    dispatch(showOffersAction(OFFERS.filter((offer) => offer.city.name === selectedCityName)));
-  }, [selectedCityName]);
+    dispatch(showOffersAction(OFFERS.filter((offer) => offer.city.name === selectedCityName).sort(offersSorter(selectedSortingOption))));
+  }, [selectedCityName, selectedSortingOption]);
 
   return (
     <div className="page page--gray page--main">
@@ -43,23 +57,13 @@ function MainPage(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{placesFound} {placesFound > 1 ? 'places' : 'place'} to stay in {selectedCityName}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
+              <Sorting onSortingOptionClick={handleSortingOptionClick}/>
               <div className="cities__places-list places__list tabs__content">
-                <CardsList offers={selectedCityOffers} onMouseCardEnter={onMouseCardHover} onMouseCardLeave={onMouseCardUnhover} classPrefix={CITY_LIST_CLASS_NAME}/>
+                <CardsList
+                  offers={selectedCityOffers}
+                  onMouseCardEnter={onMouseCardHover} onMouseCardLeave={onMouseCardUnhover}
+                  classPrefix={CITY_LIST_CLASS_NAME}
+                />
               </div>
             </section>
             <div className="cities__right-section">
