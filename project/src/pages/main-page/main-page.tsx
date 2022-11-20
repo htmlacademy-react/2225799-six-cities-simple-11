@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react';
 import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
-import {chooseCityAction, showOffersAction} from '../../store/action';
+import cn from 'classnames';
+import {chooseCityAction, selectSortingTypeAction, showOffersAction} from '../../store/action';
 import CardsList from '../../components/cards-list/cards-list';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
@@ -11,6 +12,18 @@ import {CITY_LIST_CLASS_NAME} from '../../const';
 import {OFFERS} from '../../mocks/offers';
 import {CITIES} from '../../const';
 import {Nullable} from '../../types';
+import Sorting from '../../components/sorting/sorting';
+import {SortingTypeName} from '../../const';
+
+type OffersSorterOutput = (a:Offer, b:Offer) => number;
+
+const sortOffers = (sortingType: string):OffersSorterOutput | undefined => {
+  switch (sortingType){
+    case SortingTypeName.PriceLowToHigh: return (a: Offer, b: Offer):number => a.price - b.price;
+    case SortingTypeName.PriceHighToLow: return (a: Offer, b: Offer):number => b.price - a.price;
+    case SortingTypeName.TopRatedFirst: return (a: Offer, b: Offer):number => b.rating - a.rating;
+  }
+};
 
 function MainPage(): JSX.Element {
 
@@ -26,46 +39,62 @@ function MainPage(): JSX.Element {
   const handleCitySelect = (city: string) => dispatch(chooseCityAction(city));
   const selectedCityOffers = useAppSelector((state) => state.offers);
   const selectedCity: Nullable<City> = selectedCityOffers.length ? selectedCityOffers[0].city : null;
-  const placesFound = selectedCityOffers.length;
   const cities = CITIES;
+  const selectedSortingOption = useAppSelector((state) => state.sortingType);
+  const handleSortingOptionClick = (sortingOption: string) => dispatch(selectSortingTypeAction(sortingOption));
 
   useEffect(() => {
-    dispatch(showOffersAction(OFFERS.filter((offer) => offer.city.name === selectedCityName)));
-  }, [selectedCityName]);
+    dispatch(showOffersAction(OFFERS.filter((offer) => offer.city.name === selectedCityName).sort(sortOffers(selectedSortingOption))));
+  }, [selectedCityName, selectedSortingOption]);
 
   return (
     <div className="page page--gray page--main">
       <Header/>
-      <main className="page__main page__main--index">
+      <main
+        className={cn(
+          'page__main',
+          'page__main--index',
+          {'page__main--index-empty' : !selectedCityOffers.length})}
+      >
         <CitiesList cities={cities} onCityClick={handleCitySelect}/>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesFound} {placesFound > 1 ? 'places' : 'place'} to stay in {selectedCityName}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
-              <div className="cities__places-list places__list tabs__content">
-                <CardsList offers={selectedCityOffers} onMouseCardEnter={onMouseCardHover} onMouseCardLeave={onMouseCardUnhover} classPrefix={CITY_LIST_CLASS_NAME}/>
-              </div>
-            </section>
-            <div className="cities__right-section">
-              {selectedCity && <Map city={selectedCity} points={selectedCityOffers} selectedPoint={activeCard} />}
-            </div>
-          </div>
+          {
+            selectedCityOffers.length ?
+              (
+                <div className="cities__places-container container">
+                  <section className="cities__places places">
+                    <h2 className="visually-hidden">Places</h2>
+                    <b className="places__found">{selectedCityOffers.length} {selectedCityOffers.length > 1 ? 'places' : 'place'} to stay in {selectedCityName}</b>
+                    <Sorting onSortingOptionClick={handleSortingOptionClick}/>
+                    <div className="cities__places-list places__list tabs__content">
+                      <CardsList
+                        offers={selectedCityOffers}
+                        onMouseCardEnter={onMouseCardHover}
+                        onMouseCardLeave={onMouseCardUnhover}
+                        classPrefix={CITY_LIST_CLASS_NAME}
+                      />
+                    </div>
+                  </section>
+                  <div className="cities__right-section">
+                    {selectedCity && <Map city={selectedCity} points={selectedCityOffers} selectedPoint={activeCard} />}
+                  </div>
+                </div>
+              )
+              :
+              (
+                <div className="cities__places-container cities__places-container--empty container">
+                  <section className="cities__no-places">
+                    <div className="cities__status-wrapper tabs__content">
+                      <b className="cities__status">No places to stay available</b>
+                      <p className="cities__status-description">We could not find any property available at the moment
+                        in {selectedCityName}
+                      </p>
+                    </div>
+                  </section>
+                  <div className="cities__right-section"></div>
+                </div>
+              )
+          }
         </div>
       </main>
     </div>

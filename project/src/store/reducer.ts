@@ -1,18 +1,17 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {chooseCityAction, showOffersAction} from './action';
+import {chooseCityAction, selectSortingTypeAction, showOffersAction} from './action';
 import {Offer} from '../types/offer';
 
 type State = {
   offers: Offer[];
   city: string;
-  // onMouseCardEnter?: (offer: Offer) => void;
-  // onMouseCardLeave?: () => void;
-  // classPrefix: string;
+  sortingType: string;
 }
 
 const initialState:State = {
   offers: [],
   city: 'Paris',
+  sortingType: 'Popular',
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -22,6 +21,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(showOffersAction, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(selectSortingTypeAction, (state, action) => {
+      state.sortingType = action.payload;
     });
 });
 
