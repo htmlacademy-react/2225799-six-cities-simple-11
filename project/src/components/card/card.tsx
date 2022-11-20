@@ -1,6 +1,6 @@
 import {MouseEvent} from 'react';
-import {Link} from 'react-router-dom';
 import useRating from '../../hooks/useRating';
+import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
 import {AppRoute, CURRENCY} from '../../const';
 
@@ -37,7 +37,7 @@ function Card({offer, handleMouseEnter, handleMouseLeave, classPrefix}: CardProp
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">{CURRENCY}{offer.price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;night</span>
+            <span className="place-card__price-text">&nbsp;&#47;&nbsp;night</span>
           </div>
 
         </div>
