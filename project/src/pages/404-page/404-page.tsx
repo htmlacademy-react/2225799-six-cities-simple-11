@@ -1,9 +1,13 @@
+import {Helmet} from 'react-helmet-async';
 import {Link} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 
 function Page404(): JSX.Element {
   return (
     <>
+      <Helmet>
+        <title>six cities simple: page not found</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">

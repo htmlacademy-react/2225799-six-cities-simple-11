@@ -1,4 +1,5 @@
 import useRating from '../../hooks/useRating';
+import {Helmet} from 'react-helmet-async';
 import cn from 'classnames';
 import Header from '../../components/header/header';
 import ReviewForm from '../../components/review-form/review-form';
@@ -22,6 +23,9 @@ function Room({comments, commentsNumber, offer, offersNearby}: OfferPageProps): 
 
   return (
     <>
+      <Helmet>
+        <title>six cities simple: property</title>
+      </Helmet>
       <Header/>
       <main className="page__main page__main--property">
         <section className="property">

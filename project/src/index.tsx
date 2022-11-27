@@ -6,6 +6,11 @@ import App from './components/app/app';
 import {OFFERS_NEARBY} from './mocks/offers-nearby';
 import {OFFER} from './mocks/offer';
 import {COMMENTS} from './mocks/reviews';
+import ErrorMessage from './components/error-message/error-message';
+import {fetchOffersAction, checkAuthAction} from './store/api-actions';
+
+store.dispatch(fetchOffersAction());
+store.dispatch(checkAuthAction());
 
 const Settings = {
   commentsNumber: COMMENTS.length,
@@ -18,6 +23,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ErrorMessage/>
       <App
         comments={COMMENTS}
         commentsNumber={Settings.commentsNumber}
