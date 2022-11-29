@@ -13,7 +13,7 @@ type CardProps = {
 
 function Card({offer, handleMouseEnter, handleMouseLeave, classPrefix}: CardProps): JSX.Element {
   const starsWidth = useRating(offer.rating);
-  const pathToOffer = AppRoute.Offer.concat('/:').concat(offer.id.toString());
+  const pathToOffer = AppRoute.Offer.concat('/').concat(offer.id.toString());
 
   return(
     <article
@@ -29,7 +29,10 @@ function Card({offer, handleMouseEnter, handleMouseLeave, classPrefix}: CardProp
         :
         ''}
       <div className={`${classPrefix}__image - wrapper place-card__image-wrapper`}>
-        <Link to={`${pathToOffer}`}>
+        <Link
+          to={`${pathToOffer}`}
+          // onClick={() => {dispatch(fetchOfferAction(offer));}}
+        >
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place"/>
         </Link>
       </div>

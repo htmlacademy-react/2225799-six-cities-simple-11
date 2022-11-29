@@ -8,21 +8,12 @@ import Login from '../../pages/login/login';
 import Room from '../../pages/room/room';
 import Page404 from '../../pages/404-page/404-page';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {Offer, Offers} from '../../types/offer';
-import {Reviews} from '../../types/review';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import {useEffect} from 'react';
 import {store} from '../../store';
 import {fetchUserDataAction} from '../../store/api-actions';
 
-type AppScreenProps = {
-  comments: Reviews;
-  commentsNumber: number;
-  offer: Offer;
-  offersNearby: Offers;
-}
-
-function App({comments, commentsNumber, offer, offersNearby}:AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
@@ -49,7 +40,7 @@ function App({comments, commentsNumber, offer, offersNearby}:AppScreenProps): JS
           />
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<Room comments={comments} commentsNumber={commentsNumber} offer={offer} offersNearby={offersNearby}/>}
+            element={<Room/>}
           />
           <Route
             path="*"

@@ -11,4 +11,8 @@ export type Review = {
   };
 }
 
-export type Reviews = Review[];
+export type ReviewPostData = {
+  id: number;
+  comment: string;
+  rating: number;
+}

@@ -1,4 +1,3 @@
-import useRating from '../../hooks/useRating';
 import {Helmet} from 'react-helmet-async';
 import cn from 'classnames';
 import Header from '../../components/header/header';
@@ -6,19 +5,45 @@ import ReviewForm from '../../components/review-form/review-form';
 import CommentsList from '../../components/comments-list/comments-list';
 import Map from '../../components/map/map';
 import CardsList from '../../components/cards-list/cards-list';
-import {Reviews} from '../../types/review';
-import {Offer, Offers} from '../../types/offer';
 import {MAP_HEIGHT, NEAR_PLACES_LIST_CLASS_NAME, HOST_AVATAR_SIZE} from '../../const';
+import Page404 from '../404-page/404-page';
+import useAppSelector from '../../hooks/useAppSelector';
+import getRating from '../../services/get-rating';
+import LoadingScreen from '../loading-screen/loading-screen';
+import {useParams} from 'react-router-dom';
+import {useEffect} from 'react';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import {fetchCommentsAction, fetchOfferAction, fetchOffersNearbyAction} from '../../store/api-actions';
 
-type OfferPageProps = {
-  comments: Reviews;
-  commentsNumber: number;
-  offer: Offer;
-  offersNearby: Offers;
-}
+function Room(): JSX.Element {
+  const {id} = useParams();
+  const offer = useAppSelector((state) => state.selectedOffer);
+  const offersNearby = useAppSelector((state) => state.offersNearby);
+  const isOfferDataLoading = useAppSelector((state) => state.isOfferDataLoading);
+  const comments = useAppSelector((state) => state.comments);
+  const dispatch = useAppDispatch();
+  const isAuthorized = useAppSelector((state) => state.authorizationStatus) === 'AUTH';
 
-function Room({comments, commentsNumber, offer, offersNearby}: OfferPageProps): JSX.Element {
-  const starsWidth = useRating(offer.rating);
+  useEffect(() => {
+    const offerId = Number(id);
+    dispatch(fetchOfferAction(offerId));
+    dispatch(fetchOffersNearbyAction(offerId));
+    dispatch(fetchCommentsAction(offerId));
+  }, [id, dispatch]);
+
+  if(isOfferDataLoading){
+    return (
+      <LoadingScreen/>
+    );
+  }
+
+  if(offer === null){
+    return (
+      <Page404/>
+    );
+  }
+
+  const starsWidth = getRating(offer.rating);
   const mapPoints = offersNearby.concat(offer);
 
   return (
@@ -102,9 +127,9 @@ function Room({comments, commentsNumber, offer, offersNearby}: OfferPageProps): 
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{commentsNumber}</span></h2>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
                 <CommentsList comments={comments}/>
-                <ReviewForm/>
+                {isAuthorized && <ReviewForm id={offer.id}/>}
               </section>
             </div>
           </div>
