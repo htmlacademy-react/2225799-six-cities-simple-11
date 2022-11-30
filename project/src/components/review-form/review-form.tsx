@@ -2,7 +2,8 @@ import {ChangeEvent, FormEvent, useState} from 'react';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import {sendCommentAction} from '../../store/api-actions';
 import {isRatingSet, isCommentCorrect} from '../../services/form-data-validation';
-
+import useAppSelector from '../../hooks/useAppSelector';
+//isCommentBeingSent
 type ReviewFormProps = {
   id: number;
 }
@@ -15,7 +16,7 @@ const initialReviewFormData = {
 function ReviewForm({id}: ReviewFormProps): JSX.Element {
 
   const [reviewFormData, setReviewFormData] = useState(initialReviewFormData);
-
+  const isCommentBeingSent = useAppSelector((state) => state.isCommentBeingSent);
   const dispatch = useAppDispatch();
   const isFormValid = isRatingSet(reviewFormData.rating) && isCommentCorrect(reviewFormData.comment);
 
@@ -129,7 +130,9 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           To submit review please make sure to set <span className="reviews__star">rating</span> and
           describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={!isFormValid}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={!isFormValid}>
+          {isCommentBeingSent ? 'Sending...' : 'Submit'}
+        </button>
       </div>
     </form>
   );
