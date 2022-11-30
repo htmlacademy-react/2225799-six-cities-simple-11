@@ -1,7 +1,6 @@
 import Card from '../../components/card/card';
 import {Offers, Offer} from '../../types/offer';
 
-
 type CardsListProps = {
   offers: Offers;
   onMouseCardEnter?: (offer: Offer) => void;

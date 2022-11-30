@@ -3,13 +3,11 @@ import ReactDOM from 'react-dom/client';
 import {Provider} from 'react-redux';
 import {store} from './store';
 import App from './components/app/app';
-import {OFFERS_NEARBY} from './mocks/offers-nearby';
-import {OFFER} from './mocks/offer';
-import {COMMENTS} from './mocks/reviews';
+import ErrorMessage from './components/error-message/error-message';
+import {fetchOffersAction, checkAuthAction} from './store/api-actions';
 
-const Settings = {
-  commentsNumber: COMMENTS.length,
-} as const;
+store.dispatch(fetchOffersAction());
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -18,12 +16,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App
-        comments={COMMENTS}
-        commentsNumber={Settings.commentsNumber}
-        offer={OFFER}
-        offersNearby={OFFERS_NEARBY}
-      />
+      <ErrorMessage/>
+      <App/>
     </Provider>
   </React.StrictMode>,
 );
