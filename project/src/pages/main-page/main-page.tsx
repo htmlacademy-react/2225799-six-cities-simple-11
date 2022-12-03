@@ -15,7 +15,10 @@ import {CITIES} from '../../const';
 import {Nullable} from '../../types';
 import Sorting from '../../components/sorting/sorting';
 import {SortingTypeName} from '../../const';
+import {store} from '../../store';
+import {fetchOffersAction} from '../../store/api-actions';
 
+store.dispatch(fetchOffersAction());
 type OffersSorterOutput = (a:Offer, b:Offer) => number;
 
 const sortOffers = (sortingType: string):OffersSorterOutput | undefined => {
