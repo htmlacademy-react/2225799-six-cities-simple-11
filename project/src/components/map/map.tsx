@@ -2,13 +2,13 @@ import {useEffect, useRef} from 'react';
 import useMap from '../../hooks/useMap';
 import {Icon, LayerGroup, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {City, Location, Offers} from '../../types/offer';
+import {City, Location, Offer} from '../../types/offer';
 import {ICON_SIZE, URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../const';
 
 
 type MapProps = {
   city: City;
-  points: Offers;
+  points: Offer[];
   selectedPoint: Location | undefined;
   mapHeight?: number;
 };

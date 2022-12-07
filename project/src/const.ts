@@ -4,8 +4,6 @@ export enum AppRoute {
   Offer = '/offer',
 }
 
-export const AVATAR_URL = 'https://i.pravatar.cc/74';
-
 export const CURRENCY = '€';
 
 export const URL_MARKER_DEFAULT =
@@ -24,13 +22,6 @@ export const CITY_LIST_CLASS_NAME = 'cities';
 
 export const NEAR_PLACES_LIST_CLASS_NAME = 'near-places';
 
-export enum OfferType {
-  APARTMENT = 'Apartment',
-  ROOM = 'Private Room',
-  HOUSE = 'House',
-  HOTEL = 'Hotel',
-}
-
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export enum SortingTypeName {
@@ -39,8 +30,6 @@ export enum SortingTypeName {
   PriceHighToLow = 'Price: high to low',
   TopRatedFirst = 'Top rated first',
 }
-
-export const TIMEOUT_SHOW_ERROR = 2000;
 
 export enum APIRoute {
   Offers = '/hotels',
@@ -54,4 +43,10 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
+}
+
+export enum NameSpace {
+  SelectedOffer = 'SELECTED_OFFER',
+  Offers = 'OFFERS',
+  User = 'USER',
 }

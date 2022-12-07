@@ -3,7 +3,9 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import {sendCommentAction} from '../../store/api-actions';
 import {isRatingSet, isCommentCorrect} from '../../services/form-data-validation';
 import useAppSelector from '../../hooks/useAppSelector';
-//isCommentBeingSent
+import {getCommentSendingStatus, getFormSendingError} from '../../store/selected-offer/selectors';
+import './review-form.css';
+
 type ReviewFormProps = {
   id: number;
 }
@@ -16,7 +18,8 @@ const initialReviewFormData = {
 function ReviewForm({id}: ReviewFormProps): JSX.Element {
 
   const [reviewFormData, setReviewFormData] = useState(initialReviewFormData);
-  const isCommentBeingSent = useAppSelector((state) => state.isCommentBeingSent);
+  const isCommentBeingSent = useAppSelector(getCommentSendingStatus);
+  const isFormError = useAppSelector(getFormSendingError);
   const dispatch = useAppDispatch();
   const isFormValid = isRatingSet(reviewFormData.rating) && isCommentCorrect(reviewFormData.comment);
 
@@ -125,6 +128,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
         value={reviewFormData.comment}
       >
       </textarea>
+      {isFormError ? <div className="reviews__error">Не удалось отправить форму</div> : ''}
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and

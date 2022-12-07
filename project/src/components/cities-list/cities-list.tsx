@@ -1,15 +1,16 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
 import useAppSelector from '../../hooks/useAppSelector';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import {getCity} from '../../store/offers/selectors';
+import {CITIES} from '../../const';
+import {AppRoute} from '../../const';
+import {chooseCityAction} from '../../store/offers/offers';
 
-type CitiesListProps = {
-  cities: string[];
-  onCityClick: (cityName: string) => void;
-}
-
-function CitiesList({cities, onCityClick}: CitiesListProps): JSX.Element {
-
-  const selectedCityName = useAppSelector((state) => state.city);
+function CitiesList(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const selectedCityName = useAppSelector(getCity);
+  const cities = CITIES;
+  const handleCitySelect = (city: string) => dispatch(chooseCityAction(city));
 
   return(
     <>
@@ -19,7 +20,7 @@ function CitiesList({cities, onCityClick}: CitiesListProps): JSX.Element {
           <ul className="locations__list tabs__list">
             {cities.map((city: string) => (
               <li key ={city} className="locations__item">
-                <Link className={`locations__item-link tabs__item ${city === selectedCityName ? 'tabs__item--active' : ''}`} to={AppRoute.Root} onClick={() => onCityClick(city)}>
+                <Link className={`locations__item-link tabs__item ${city === selectedCityName ? 'tabs__item--active' : ''}`} to={AppRoute.Root} onClick={() => handleCitySelect(city)}>
                   <span>{city}</span>
                 </Link>
               </li>

@@ -1,25 +1,25 @@
-import {MouseEvent} from 'react';
-import useRating from '../../hooks/useRating';
+import getRating from '../../services/get-rating';
+import useAppDispatch from '../../hooks/useAppDispatch';
 import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
 import {AppRoute, CURRENCY} from '../../const';
+import {selectActiveCardAction} from '../../store/offers/offers';
 
 type CardProps = {
   offer: Offer;
-  handleMouseEnter?: (offer: Offer) => void;
-  handleMouseLeave?: () => void;
   classPrefix: string;
 }
 
-function Card({offer, handleMouseEnter, handleMouseLeave, classPrefix}: CardProps): JSX.Element {
-  const starsWidth = useRating(offer.rating);
+function Card({offer, classPrefix}: CardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const starsWidth = getRating(offer.rating);
   const pathToOffer = AppRoute.Offer.concat('/').concat(offer.id.toString());
 
   return(
     <article
       className={`${classPrefix}__card place-card`}
-      onMouseEnter={(event: MouseEvent<HTMLElement>) => {handleMouseEnter && handleMouseEnter(offer);}}
-      onMouseLeave={handleMouseLeave && handleMouseLeave}
+      onMouseEnter={() => dispatch(selectActiveCardAction(offer.location))}
+      onMouseLeave={() => dispatch(selectActiveCardAction(undefined))}
     >
       {offer.isPremium
         ?
