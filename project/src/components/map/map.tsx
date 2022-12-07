@@ -1,14 +1,14 @@
 import {useEffect, useRef} from 'react';
 import useMap from '../../hooks/useMap';
-import {Icon, Marker} from 'leaflet';
+import {Icon, LayerGroup, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {City, Location, Offers} from '../../types/offer';
+import {City, Location, Offer} from '../../types/offer';
 import {ICON_SIZE, URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../const';
 
 
 type MapProps = {
   city: City;
-  points: Offers;
+  points: Offer[];
   selectedPoint: Location | undefined;
   mapHeight?: number;
 };
@@ -33,6 +33,8 @@ function Map({city, points, selectedPoint, mapHeight}: MapProps): JSX.Element {
   const mapHeightStyle = mapHeight ? mapHeight.toString().concat('px') : 'auto';
 
   useEffect(() => {
+
+    const markers = new LayerGroup();
     if (map) {
       points.forEach((point) => {
         const marker = new Marker({
@@ -46,10 +48,16 @@ function Map({city, points, selectedPoint, mapHeight}: MapProps): JSX.Element {
               ? currentCustomIcon
               : defaultCustomIcon
           )
-          .addTo(map);
+          .addTo(markers);
       });
+
+      markers.addTo(map);
     }
-  }, [map, points, selectedPoint]);
+
+    return() => {
+      map?.removeLayer(markers);
+    };
+  }, [map, points, selectedPoint, city]);
 
   return <section className="cities__map map" ref={mapRef} style={{height: mapHeightStyle}}></section>;
 }

@@ -9,20 +9,31 @@ import {MAP_HEIGHT, NEAR_PLACES_LIST_CLASS_NAME, HOST_AVATAR_SIZE} from '../../c
 import Page404 from '../404-page/404-page';
 import useAppSelector from '../../hooks/useAppSelector';
 import getRating from '../../services/get-rating';
-import LoadingScreen from '../loading-screen/loading-screen';
 import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import useAppDispatch from '../../hooks/useAppDispatch';
-import {fetchCommentsAction, fetchOfferAction, fetchOffersNearbyAction} from '../../store/api-actions';
+import {
+  fetchCommentsAction,
+  fetchOfferAction,
+  fetchOffersNearbyAction,
+} from '../../store/api-actions';
+import {
+  getComments,
+  getOffersNearby,
+  getSelectedOffer
+} from '../../store/selected-offer/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
+import LoadingScreen from '../loading-screen/loading-screen';
+import {getOfferDataLoadingStatus} from '../../store/selected-offer/selectors';
 
 function Room(): JSX.Element {
   const {id} = useParams();
-  const offer = useAppSelector((state) => state.selectedOffer);
-  const offersNearby = useAppSelector((state) => state.offersNearby);
-  const isOfferDataLoading = useAppSelector((state) => state.isOfferDataLoading);
-  const comments = useAppSelector((state) => state.comments);
+  const offer = useAppSelector(getSelectedOffer);
+  const offersNearby = useAppSelector(getOffersNearby);
+  const comments = useAppSelector(getComments);
   const dispatch = useAppDispatch();
-  const isAuthorized = useAppSelector((state) => state.authorizationStatus) === 'AUTH';
+  const isAuthorized = useAppSelector(getAuthorizationStatus) === 'AUTH';
+  const isOfferDataLoading = useAppSelector(getOfferDataLoadingStatus);
 
   useEffect(() => {
     const offerId = Number(id);
@@ -31,12 +42,12 @@ function Room(): JSX.Element {
     dispatch(fetchCommentsAction(offerId));
   }, [id, dispatch]);
 
-  if(isOfferDataLoading){
+
+  if (isOfferDataLoading){
     return (
       <LoadingScreen/>
     );
   }
-
   if(offer === null){
     return (
       <Page404/>
@@ -44,7 +55,7 @@ function Room(): JSX.Element {
   }
 
   const starsWidth = getRating(offer.rating);
-  const mapPoints = offersNearby.concat(offer);
+  const mapPoints = offersNearby ? offersNearby?.concat(offer) : Array.from([offer]);
 
   return (
     <>
@@ -56,7 +67,7 @@ function Room(): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {offer.images.map((image, index) => {
+              {offer.images.slice(0, 6).map((image, index) => {
                 const keyValue = index.toString() + offer.id.toString().concat('-').concat(image);
 
                 return(
@@ -139,7 +150,7 @@ function Room(): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <CardsList offers={offersNearby} classPrefix={NEAR_PLACES_LIST_CLASS_NAME}/>
+              {offersNearby && <CardsList offers={offersNearby} classPrefix={NEAR_PLACES_LIST_CLASS_NAME}/>}
             </div>
           </section>
         </div>

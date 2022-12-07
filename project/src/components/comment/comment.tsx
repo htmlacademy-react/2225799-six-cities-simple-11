@@ -1,12 +1,12 @@
 import {Review} from '../../types/review';
-import useRating from '../../hooks/useRating';
+import getRating from '../../services/get-rating';
 
 type CommentProps = {
   comment: Review;
 }
 
 function Comment({comment}:CommentProps): JSX.Element {
-  const starsWidth = useRating(comment.rating);
+  const starsWidth = getRating(comment.rating);
   const commentDate = new Date(comment.date);
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'

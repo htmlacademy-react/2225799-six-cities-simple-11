@@ -1,18 +1,19 @@
 import {useState} from 'react';
+import {MouseEvent} from 'react';
 import cn from 'classnames';
 import {SortingTypeName} from '../../const';
 import useAppSelector from '../../hooks/useAppSelector';
+import {getSortingType} from '../../store/offers/selectors';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import {selectSortingTypeAction} from '../../store/offers/offers';
 
-type SortingProps = {
-  onSortingOptionClick: (cityName: string) => void;
-}
-
-function Sorting({onSortingOptionClick}:SortingProps): JSX.Element {
+function Sorting(): JSX.Element {
+  const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const sortingTypes = Object.values(SortingTypeName);
+  const selectedSortingOption = useAppSelector(getSortingType);
   const handleSortingTytleClick = ():void => {setIsOpen((state) => !state);};
-  const selectedSortingOption = useAppSelector((state) => state.sortingType);
-
+  const handleSortingOptionClick = (sortingOption: string) => dispatch(selectSortingTypeAction(sortingOption));
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by&nbsp;</span>
@@ -34,8 +35,9 @@ function Sorting({onSortingOptionClick}:SortingProps): JSX.Element {
               {'places__option--active' : sortingTypeItem === selectedSortingOption})}
             key={sortingTypeItem.trim()}
             tabIndex={0}
-            onClick={() => {
-              onSortingOptionClick(sortingTypeItem);
+            onClick={(evt: MouseEvent<HTMLLIElement>) => {
+              evt.preventDefault();
+              handleSortingOptionClick(sortingTypeItem);
               setIsOpen((state) => !state);
             }}
           >

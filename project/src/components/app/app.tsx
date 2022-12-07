@@ -9,17 +9,12 @@ import Room from '../../pages/room/room';
 import Page404 from '../../pages/404-page/404-page';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import {useEffect} from 'react';
-import {store} from '../../store';
-import {fetchUserDataAction} from '../../store/api-actions';
+import {getAuthorizationStatus} from '../../store/user/selectors';
+import {getOffersDataLoadingStatus} from '../../store/offers/selectors';
 
 function App(): JSX.Element {
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-
-  useEffect(() => {
-    store.dispatch(fetchUserDataAction());
-  }, [authorizationStatus]);
+  const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (isOffersDataLoading || authorizationStatus === AuthorizationStatus.Unknown){
     return (

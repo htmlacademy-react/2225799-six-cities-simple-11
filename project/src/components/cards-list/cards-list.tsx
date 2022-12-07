@@ -1,14 +1,12 @@
 import Card from '../../components/card/card';
-import {Offers, Offer} from '../../types/offer';
+import {Offers} from '../../types/offer';
 
 type CardsListProps = {
   offers: Offers;
-  onMouseCardEnter?: (offer: Offer) => void;
-  onMouseCardLeave?: () => void;
   classPrefix: string;
 }
 
-function CardsList({offers, onMouseCardEnter, onMouseCardLeave, classPrefix}: CardsListProps): JSX.Element {
+function CardsList({offers, classPrefix}: CardsListProps): JSX.Element {
 
   return(
     <>
@@ -16,7 +14,7 @@ function CardsList({offers, onMouseCardEnter, onMouseCardLeave, classPrefix}: Ca
         const keyValue = offer.id;
 
         return(
-          <Card offer={offer} key ={keyValue} handleMouseEnter={onMouseCardEnter} handleMouseLeave={onMouseCardLeave} classPrefix={classPrefix}/>
+          <Card offer={offer} key ={keyValue} classPrefix={classPrefix}/>
         );
       })}
     </>
