@@ -1,6 +1,6 @@
 import { helpers } from 'faker';
 import {Location, Offer} from '../types/offer';
-import {Review} from '../types/review';
+import {Review, ReviewPostData} from '../types/review';
 import {UserData} from '../types/user-data';
 
 const CITY_1 = 'Cologne';
@@ -241,7 +241,7 @@ const USER_1: UserData = {
   id: 22,
   isPro: true,
   name: 'Ann',
-  token: 'dfgrtfhdyvtbfyjungk54634',
+  token: 'secret',
 };
 
 const USER_2: UserData = {
@@ -250,7 +250,13 @@ const USER_2: UserData = {
   id: 21,
   isPro: false,
   name: 'Mary',
-  token: 'fdfgdfghhdyvtbfyjungk54634',
+  token: 'secret',
+};
+
+const NEW_COMMENT: ReviewPostData = {
+  id: 13,
+  comment: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+  rating: 4,
 };
 
 export const makeFakeCity = ():string => helpers.randomize<string>([CITY_1, CITY_2]);
@@ -259,4 +265,5 @@ export const makeFakeSelectedOffer = ():Offer => helpers.randomize<Offer>([OFFER
 export const makeFakeSortingType = ():string => helpers.randomize<string>([SORTING_TYPE_1, SORTING_TYPE_2]);
 export const makeFakeActiveCard = ():Location => helpers.randomize<Location>([ACTIVE_CARD_1, ACTIVE_CARD_2]);
 export const makeFakeComments = ():Review[] => [COMMENT_1, COMMENT_2, COMMENT_3];
+export const makeFakeComment = ():ReviewPostData => NEW_COMMENT;
 export const makeFakeUser = ():UserData => helpers.randomize<UserData>([USER_1, USER_2]);
