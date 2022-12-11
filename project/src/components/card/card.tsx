@@ -29,10 +29,7 @@ function Card({offer, classPrefix}: CardProps): JSX.Element {
         :
         ''}
       <div className={`${classPrefix}__image - wrapper place-card__image-wrapper`}>
-        <Link
-          to={`${pathToOffer}`}
-          // onClick={() => {dispatch(fetchOfferAction(offer));}}
-        >
+        <Link to={`${pathToOffer}`}>
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place"/>
         </Link>
       </div>
