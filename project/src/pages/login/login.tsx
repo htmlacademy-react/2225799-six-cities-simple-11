@@ -77,6 +77,7 @@ function Login(): JSX.Element {
                     placeholder="Email"
                     required
                     ref={loginRef}
+                    data-testid="login"
                   />
                 </div>
                 <div className="login__input-wrapper form__input-wrapper">
@@ -89,6 +90,7 @@ function Login(): JSX.Element {
                     required
                     ref={passwordRef}
                     pattern='(?=.*?[0-9])(?=.*?[A-Za-z]).+'
+                    data-testid="password"
                   />
                 </div>
                 <button

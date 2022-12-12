@@ -27,7 +27,7 @@ function MainPage(): JSX.Element {
 
   useEffect(() => {
     dispatch(showOffersAction(offersFiltered));
-  }, [selectedCityName, selectedSortingOption, offers, dispatch]);
+  }, [selectedCityName, selectedSortingOption, offers, dispatch]); // eslint-disable-line
 
   return (
     <>

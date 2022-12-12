@@ -52,6 +52,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           type="radio"
           onChange={handleRatingChange}
           checked={reviewFormData.rating === 5}
+          data-testid="5-stars"
         />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
@@ -67,6 +68,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           type="radio"
           onChange={handleRatingChange}
           checked={reviewFormData.rating === 4}
+          data-testid="4-stars"
         />
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
           <svg className="form__star-image" width="37" height="33">
@@ -82,6 +84,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           type="radio"
           onChange={handleRatingChange}
           checked={reviewFormData.rating === 3}
+          data-testid="3-stars"
         />
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
           <svg className="form__star-image" width="37" height="33">
@@ -97,6 +100,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           type="radio"
           onChange={handleRatingChange}
           checked={reviewFormData.rating === 2}
+          data-testid="2-stars"
         />
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
           <svg className="form__star-image" width="37" height="33">
@@ -112,6 +116,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           type="radio"
           onChange={handleRatingChange}
           checked={reviewFormData.rating === 1}
+          data-testid="1-stars"
         />
         <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
           <svg className="form__star-image" width="37" height="33">
@@ -126,6 +131,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleCommentChange}
         value={reviewFormData.comment}
+        data-testid="review"
       >
       </textarea>
       {isFormError ? <div className="reviews__error">Не удалось отправить форму</div> : ''}
@@ -134,7 +140,12 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           To submit review please make sure to set <span className="reviews__star">rating</span> and
           describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={!isFormValid}>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled={!isFormValid || isCommentBeingSent}
+          data-testid="submit"
+        >
           {isCommentBeingSent ? 'Sending...' : 'Submit'}
         </button>
       </div>
