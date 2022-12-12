@@ -112,15 +112,6 @@ describe('Application routing', () => {
     expect(screen.getByText(/to stay in/i)).toBeInTheDocument();
   });
 
-  // it('should render Offer Page when user navigates to "/offer/id"', () => {
-  //   history.push(`${AppRoute.Offer}/:${mockSelectedOffer.id}`);
-  //
-  //   render(fakeAppNotAuthorized);
-  //
-  //   expect(screen.getByText(/What's inside/i)).toBeInTheDocument();
-  //   expect(screen.getByText(/Reviews/i)).toBeInTheDocument();
-  // });
-
   it('should redirect user to 404 Page when he tries to open fake Page "/fake"', () => {
     history.push('/fake');
 
