@@ -16,8 +16,6 @@ export type City = {
   name: string;
 }
 
-export type Cities = City[]
-
 export type Offer = {
   bedrooms: number;
   city: City;

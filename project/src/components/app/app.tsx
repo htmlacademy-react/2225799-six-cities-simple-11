@@ -4,7 +4,7 @@ import useAppSelector from '../../hooks/useAppSelector';
 import MainPage from '../../pages/main-page/main-page';
 import Login from '../../pages/login/login';
 import Room from '../../pages/room/room';
-import Page404 from '../../pages/404-page/404-page';
+import Page404 from '../../pages/page-404/page-404';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import {getAuthorizationStatus} from '../../store/user/selectors';
