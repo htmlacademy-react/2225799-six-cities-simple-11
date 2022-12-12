@@ -6,7 +6,7 @@ import CommentsList from '../../components/comments-list/comments-list';
 import Map from '../../components/map/map';
 import CardsList from '../../components/cards-list/cards-list';
 import {MAP_HEIGHT, NEAR_PLACES_LIST_CLASS_NAME, HOST_AVATAR_SIZE} from '../../const';
-import Page404 from '../404-page/404-page';
+import Page404 from '../page-404/page-404';
 import useAppSelector from '../../hooks/useAppSelector';
 import getRating from '../../services/get-rating';
 import {useParams} from 'react-router-dom';

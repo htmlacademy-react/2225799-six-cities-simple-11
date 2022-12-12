@@ -4,6 +4,7 @@ import {sendCommentAction} from '../../store/api-actions';
 import {isRatingSet, isCommentCorrect} from '../../services/form-data-validation';
 import useAppSelector from '../../hooks/useAppSelector';
 import {getCommentSendingStatus, getFormSendingError} from '../../store/selected-offer/selectors';
+import {StarRate} from '../../const';
 import './review-form.css';
 
 type ReviewFormProps = {
@@ -51,7 +52,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           id="5-stars"
           type="radio"
           onChange={handleRatingChange}
-          checked={reviewFormData.rating === 5}
+          checked={reviewFormData.rating === StarRate.FiveStars}
           data-testid="5-stars"
         />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
@@ -67,7 +68,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           id="4-stars"
           type="radio"
           onChange={handleRatingChange}
-          checked={reviewFormData.rating === 4}
+          checked={reviewFormData.rating === StarRate.FourStars}
           data-testid="4-stars"
         />
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
@@ -83,7 +84,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           id="3-stars"
           type="radio"
           onChange={handleRatingChange}
-          checked={reviewFormData.rating === 3}
+          checked={reviewFormData.rating === StarRate.ThreeStars}
           data-testid="3-stars"
         />
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
@@ -99,7 +100,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           id="2-stars"
           type="radio"
           onChange={handleRatingChange}
-          checked={reviewFormData.rating === 2}
+          checked={reviewFormData.rating === StarRate.TwoStars}
           data-testid="2-stars"
         />
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
@@ -115,7 +116,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           id="1-star"
           type="radio"
           onChange={handleRatingChange}
-          checked={reviewFormData.rating === 1}
+          checked={reviewFormData.rating === StarRate.OneStar}
           data-testid="1-stars"
         />
         <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
